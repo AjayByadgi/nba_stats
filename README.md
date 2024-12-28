@@ -2,6 +2,8 @@
 
 This Streamlit app provides real-time updates and statistics for live NBA games by integrating NBA's live data API. It tracks game scores, player statistics, and team performance while maintaining a local DuckDB database for historical data analysis.
 
+https://nbalive.streamlit.app/
+
 ## Features
 
 - **Live Game Dashboard**: Displays live scores, game status, and player statistics for home and away teams.
