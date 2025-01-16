@@ -14,6 +14,7 @@ https://nbalive.streamlit.app/
 - **Custom Refresh Rates**: Adjustable refresh interval for real-time updates.
 - **Data Visualization**: Interactive data tables for exploring historical game data.
 - **Database Management**: Tools to reset and view database content directly from the app.
+- **Predicting Live games**: Machine learning with Random Forest to predict live nba games. 
 
 
 
@@ -60,3 +61,23 @@ The code maintains database consistency through:
 Transaction management using commit()
 Atomic updates using INSERT OR REPLACE
 Primary key constraints ensuring data integrity
+
+
+Goals / Tweaks: 
+
+For Database: 
+Have not only a database for the live games but also one for historical games.
+Include more statistics and possibly advanced ones like VORP or defensive rating. 
+
+For Predictions:
+
+Predictions take a large amount of time beacuse its creating features and using data for many games throughout the season each time a prediction is made.
+For a more optimized approach store the existing models and for every new game add that new data for training , this iterative approach can be much more efficient. 
+Additionally, better features can be used to train the model such as detailed player statistics/injuries and team statistics for every game rather than a culimative approach using average team stats.
+
+Eventually it updating the odds throughout the match as it is live can be possisble, as well as showing the 'vegas odds' of the match would be a good comparison. 
+
+Overall frontend: 
+
+Possibly adding pictures of players, better layout for games/statistics based on surveyed users.
+
