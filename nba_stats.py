@@ -11,6 +11,16 @@ import json
 # Initialize the database for storing NBA game, team, and player data
 db = NBALiveStatsDB()
 
+
+
+# Sidebar: Add GitHub link
+st.sidebar.markdown(
+    """
+    ### 🔗 GitHub Repository
+    [View on GitHub](https://github.com/AjayByadgi/nba_stats)
+    """
+)
+
 # Function to format the minutes played in a human-readable format
 def format_minutes(minutes_str):
     try:
@@ -192,7 +202,7 @@ try:
                     try:
                         with st.spinner('Generating prediction...'):
                             prediction = predict_upcoming_game(home_team['teamTricode'], away_team['teamTricode'])
-                            st.success(f"Prediction: {home_team['teamTricode']} with {prediction['home_win_probability']:.1%} win probability")
+                            st.success(f"Prediction: {home_team['teamTricode']} with {prediction['home_win_probability']:.1%} win percentage")
                     except Exception as e:
                         st.error(f"Prediction error: {e}")
 
