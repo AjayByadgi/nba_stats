@@ -2,6 +2,7 @@
 
 This Streamlit app provides real-time updates and statistics for live NBA games by integrating NBA's live data API. It tracks game scores, player statistics, and team performance while maintaining a local DuckDB database for historical data analysis.
 
+Additionally has predictions for live games ( experimental ) which uses random forest machine learning! 
 
 https://nbalive.streamlit.app/
 
