@@ -17,6 +17,14 @@ https://nbalive.streamlit.app/
 - **Predicting Live games**: Machine learning with Random Forest to predict live nba games. 
 
 
+![image](https://github.com/user-attachments/assets/a76bda11-e376-4a26-b3cd-373150b4864b)
+
+
+ 
+ ![image](https://github.com/user-attachments/assets/fa0d1e84-3127-482f-9cb1-5cfd27b86f0a)
+
+
+![image](https://github.com/user-attachments/assets/f50622b0-8c81-4362-ab38-ad85971a965a)
 
 ## Relational Database with Duckdb 
 
