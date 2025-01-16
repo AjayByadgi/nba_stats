@@ -19,6 +19,7 @@ https://nbalive.streamlit.app/
 
 ![image](https://github.com/user-attachments/assets/a76bda11-e376-4a26-b3cd-373150b4864b)
 
+![Screenshot 2025-01-15 224904](https://github.com/user-attachments/assets/6e23d486-c53b-4057-a192-cde4496c6427)
 
  
  ![image](https://github.com/user-attachments/assets/fa0d1e84-3127-482f-9cb1-5cfd27b86f0a)
