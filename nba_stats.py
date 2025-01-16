@@ -5,7 +5,9 @@ import streamlit as st  # For building the interactive web app interface
 import pandas as pd  # For data manipulation and creating data tables
 import time  # For managing time-based operations, like refresh intervals
 from nba_live_stats_db import NBALiveStatsDB  # Custom module for handling database operations
+from nba_predictor import predict_upcoming_game # Custom module for predicting nba games 
 
+import json
 # Initialize the database for storing NBA game, team, and player data
 db = NBALiveStatsDB()
 
@@ -44,17 +46,24 @@ def fetch_player_stats(game_id):
 def display_player_stats(game_id, home_team, away_team):
     # Fetch game data using the game ID
     game_data = fetch_player_stats(game_id)
+    # example_output_file = "output.json"
+    # with open(example_output_file, "w") as file:
+    #     json.dump(game_data, file, indent=4)  # 'indent=4' makes the JSON file more readable
+
+    #print(game_data)
     if not game_data:
         st.warning("Player statistics are unavailable for this game.")
         return
 
     # Create tabs for home and away teams
-    team_tab1, team_tab2 = st.tabs([
-        f"{home_team['teamCity']} {home_team['teamName']}",
-        f"{away_team['teamCity']} {away_team['teamName']}"
+    team_tab2, team_tab1 = st.tabs([
+        f"{away_team['teamCity']} {away_team['teamName']}",
+        f"{home_team['teamCity']} {home_team['teamName']}"
+        
     ])
 
     # Display player stats for the home team
+    
     with team_tab1:
         players = game_data.get('homeTeam', {}).get('players', [])
         if players:
@@ -90,9 +99,10 @@ def display_player_stats(game_id, home_team, away_team):
                     players_data.append({
                         'PLAYER': f"{player['name']} {'(S)' if player.get('starter') == '1' else ''}",
                         'MIN': format_minutes(stats.get('minutes', '0')),
-                        'PTS': stats.get('points', 0),
+                        'PTS': stats.get('points', 0), 
                         'REB': stats.get('reboundsTotal', 0),
                         'AST': stats.get('assists', 0),
+                        'BLK': stats.get('blocks', 0),
                         'FG': f"{stats.get('fieldGoalsMade', 0)}-{stats.get('fieldGoalsAttempted', 0)}",
                         'FG%': f"{stats.get('fieldGoalsPercentage', 0) * 100:.1f}",
                         '3P': f"{stats.get('threePointersMade', 0)}-{stats.get('threePointersAttempted', 0)}",
@@ -176,13 +186,29 @@ try:
             if game["gameStatus"] == 1:  # Pre-game
                 game_time = datetime.strptime(game['gameEt'], '%Y-%m-%dT%H:%M:%SZ')
                 st.info(f"🕒 Tip-off at {game_time.strftime('%I:%M %p ET')}")
+                st.info("⏳ Predictions may take over 4 minutes to generate due to extensive data collection and analysis.", icon="ℹ️")
+
+                if st.button(f"Predict Outcome for {home_team['teamName']} vs {away_team['teamName']}", key=f"predict_{game_id}"):
+                    try:
+                        with st.spinner('Generating prediction...'):
+                            prediction = predict_upcoming_game(home_team['teamTricode'], away_team['teamTricode'])
+                            st.success(f"Prediction: {home_team['teamTricode']} with {prediction['home_win_probability']:.1%} win probability")
+                    except Exception as e:
+                        st.error(f"Prediction error: {e}")
+
+
                 continue
+            # elif game["gameStatusText"] == "Halftime":
+            #     st.header(f"Half-Time")
+            #     st.header(f"{away_team['score']} - {home_team['score']}")
+
             elif game["gameStatus"] == 2:  # Live game
                 st.write(f"Q{game['period']} - {game['gameClock']}")
                 st.header(f"{away_team['score']} - {home_team['score']}")
             else:  # Final score
                 st.write("Final")
                 st.header(f"{away_team['score']} - {home_team['score']}")
+
 
         with col2:
             # Display team statistics
@@ -192,6 +218,10 @@ try:
                 st.write(f"{away_team['teamCity']} in bonus")
             if home_team['inBonus'] != "None":
                 st.write(f"{home_team['teamCity']} in bonus")
+
+        
+        
+
 
         # Display player statistics for the game
         try:
